@@ -2,6 +2,7 @@
 
 from litestar import Controller, get, post, put, delete
 from litestar.status_codes import HTTP_201_CREATED, HTTP_204_NO_CONTENT
+from litestar.exceptions import NotFoundException
 from app.models.item import Item
 
 # In-memory storage for demo purposes
@@ -23,7 +24,7 @@ class ItemController(Controller):
     async def get_item(self, item_id: int) -> Item:
         """Get a specific item by ID."""
         if item_id not in items_db:
-            raise ValueError(f"Item {item_id} not found")
+            raise NotFoundException(detail=f"Item {item_id} not found")
         return items_db[item_id]
 
     @post(status_code=HTTP_201_CREATED)
@@ -39,7 +40,7 @@ class ItemController(Controller):
     async def update_item(self, item_id: int, data: Item) -> Item:
         """Update an existing item."""
         if item_id not in items_db:
-            raise ValueError(f"Item {item_id} not found")
+            raise NotFoundException(detail=f"Item {item_id} not found")
         data.id = item_id
         items_db[item_id] = data
         return data
@@ -48,5 +49,5 @@ class ItemController(Controller):
     async def delete_item(self, item_id: int) -> None:
         """Delete an item."""
         if item_id not in items_db:
-            raise ValueError(f"Item {item_id} not found")
+            raise NotFoundException(detail=f"Item {item_id} not found")
         del items_db[item_id]

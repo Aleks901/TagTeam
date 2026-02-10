@@ -5,6 +5,17 @@ from litestar.testing import TestClient
 from app.main import app
 
 
+@pytest.fixture(autouse=True)
+def reset_items_db():
+    """Reset the in-memory database before each test."""
+    from app.controllers import items
+
+    items.items_db.clear()
+    items.next_id = 1
+    yield
+    items.items_db.clear()
+
+
 @pytest.fixture
 def client():
     """Create a test client."""
@@ -74,4 +85,4 @@ def test_delete_item(client):
 
     # Verify it's gone
     get_response = client.get(f"/items/{item_id}")
-    assert get_response.status_code == 500  # Should raise an error
+    assert get_response.status_code == 404  # Should return Not Found
