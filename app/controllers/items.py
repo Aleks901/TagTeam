@@ -1,8 +1,8 @@
 """Items controller for CRUD operations."""
+
 from litestar import Controller, get, post, put, delete
 from litestar.status_codes import HTTP_201_CREATED, HTTP_204_NO_CONTENT
 from app.models.item import Item
-
 
 # In-memory storage for demo purposes
 items_db: dict[int, Item] = {}

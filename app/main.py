@@ -1,8 +1,7 @@
 """Main application entry point for the Litestar application."""
+
 from litestar import Litestar, get
 from litestar.config.cors import CORSConfig
-from litestar.contrib.jinja import JinjaTemplateEngine
-from litestar.template.config import TemplateConfig
 from app.controllers.health import HealthController
 from app.controllers.items import ItemController
 

@@ -1,4 +1,5 @@
 """Item model definition."""
+
 from dataclasses import dataclass
 from typing import Optional
 

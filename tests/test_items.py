@@ -1,4 +1,5 @@
 """Tests for the items controller."""
+
 import pytest
 from litestar.testing import TestClient
 from app.main import app
@@ -19,11 +20,7 @@ def test_list_items_empty(client):
 
 def test_create_item(client):
     """Test creating a new item."""
-    item_data = {
-        "name": "Test Item",
-        "description": "A test item",
-        "price": 10.99
-    }
+    item_data = {"name": "Test Item", "description": "A test item", "price": 10.99}
     response = client.post("/items", json=item_data)
     assert response.status_code == 201
     data = response.json()
@@ -39,7 +36,7 @@ def test_get_item(client):
     item_data = {"name": "Test Item", "price": 10.99}
     create_response = client.post("/items", json=item_data)
     item_id = create_response.json()["id"]
-    
+
     # Then get it
     response = client.get(f"/items/{item_id}")
     assert response.status_code == 200
@@ -54,7 +51,7 @@ def test_update_item(client):
     item_data = {"name": "Test Item", "price": 10.99}
     create_response = client.post("/items", json=item_data)
     item_id = create_response.json()["id"]
-    
+
     # Then update it
     updated_data = {"name": "Updated Item", "price": 20.99}
     response = client.put(f"/items/{item_id}", json=updated_data)
@@ -70,11 +67,11 @@ def test_delete_item(client):
     item_data = {"name": "Test Item", "price": 10.99}
     create_response = client.post("/items", json=item_data)
     item_id = create_response.json()["id"]
-    
+
     # Then delete it
     response = client.delete(f"/items/{item_id}")
     assert response.status_code == 204
-    
+
     # Verify it's gone
     get_response = client.get(f"/items/{item_id}")
     assert get_response.status_code == 500  # Should raise an error

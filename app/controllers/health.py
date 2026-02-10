@@ -1,6 +1,7 @@
 """Health check controller."""
+
 from litestar import Controller, get
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 class HealthController(Controller):
@@ -13,5 +14,5 @@ class HealthController(Controller):
         """Check if the application is running."""
         return {
             "status": "healthy",
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }

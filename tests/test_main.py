@@ -1,4 +1,5 @@
 """Tests for the main application."""
+
 import pytest
 from litestar.testing import TestClient
 from app.main import app
